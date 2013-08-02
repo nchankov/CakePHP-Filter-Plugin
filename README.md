@@ -50,12 +50,13 @@ class Posts externds AppController {
   
   public function index(){
     if(!empty($this->request->data)){
-			$this->request->data['OR']['Post']['author'] = $this->request->data['OR']['Posts']['name'];
-			$this->request->data['OR']['Post']['slug'] = $this->request->data['OR']['Posts']['slug'];
+			$this->request->data['OR']['Author']['name'] = $this->request->data['OR']['Posts']['name'];
+			$this->request->data['OR']['Post']['slug'] = $this->request->data['OR']['Posts']['name'];
 		}
     $filter = $this->Filter->process($this); //This make the magic
     $this->set('posts', $this->paginate($filter)); //Here we set $filter as pagination filter
   }
 }
 ```
-This way with one field you can search in multiple db columns.
+This way with one field you can search in multiple db columns and even multiple models (of course they need to be properly assigned to the main Model). 
+The the above example when you search for 'John Doe' it will find all posts which has Author John Doe and the name or slug of the post contain John Doe as name. 
